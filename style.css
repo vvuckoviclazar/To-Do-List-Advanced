@@ -8,3 +8,114 @@
 html {
   font-size: 6.25%;
 }
+
+body {
+  font-family: sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+header {
+  background-color: rgb(111, 143, 148);
+  padding: 33rem 0rem 33rem 33rem;
+}
+
+footer {
+  font-size: 16rem;
+  background-color: rgb(111, 143, 148);
+  color: white;
+  font-weight: 200;
+  text-align: center;
+  padding: 8rem 0rem 8rem 0rem;
+}
+
+h1 {
+  font-size: 40rem;
+  font-weight: 300;
+  color: white;
+}
+
+.arrow {
+  width: 15rem;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1.1fr 2.9fr;
+}
+
+.left {
+  background-color: rgb(218, 218, 218);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 40rem 18rem 10rem 18rem;
+}
+
+.right {
+  background-color: rgb(236, 236, 236);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 40rem 35rem 10rem 35rem;
+}
+
+button {
+  border: none;
+  border-radius: 7rem;
+  background-color: transparent;
+  font-size: 27rem;
+  font-weight: 900;
+  margin-bottom: 20rem;
+  width: 100%;
+  padding: 12rem 0rem 12rem 0rem;
+  color: rgb(56, 68, 70);
+}
+
+button:hover {
+  background-color: rgb(199, 199, 199);
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+  font-weight: 300;
+  font-size: 27rem;
+  gap: 5rem;
+  color: rgb(56, 68, 70);
+  margin-bottom: 10rem;
+}
+
+.project-input {
+  border: none;
+  font-size: 22rem;
+  padding: 10rem 29rem 10rem 24rem;
+  border-radius: 5rem;
+  margin-bottom: 5rem;
+  color: rgb(56, 68, 70);
+}
+
+.project-btn {
+  border-radius: 5rem;
+  border: none;
+  background-color: rgb(243, 243, 243);
+  font-size: 20rem;
+  font-weight: 300;
+  margin-bottom: 0rem;
+  padding: 7rem 0rem 7rem 0rem;
+}
+
+.project-form-div {
+  display: flex;
+  align-items: center;
+  gap: 120rem;
+}

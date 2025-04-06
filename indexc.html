@@ -7,6 +7,62 @@
     <title>To-Do-List-Advanced</title>
   </head>
   <body>
+    <header>
+      <h1>TODO LIST</h1>
+    </header>
+    <div class="container">
+      <div class="left">
+        <button class="new-project-btn">+ New Project</button>
+        <h3>
+          Projects
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="arrow"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2.25a.75.75 0 0 1 .75.75v16.19l6.22-6.22a.75.75 0 1 1 1.06 1.06l-7.5 7.5a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 1 1 1.06-1.06l6.22 6.22V3a.75.75 0 0 1 .75-.75Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </h3>
+        <form class="new-project-form">
+          <input
+            type="text"
+            class="project-input"
+            placeholder="My Project"
+            required=""
+          />
+          <div class="project-form-div">
+            <button type="submit" class="add-project-btn project-btn">
+              Add
+            </button>
+            <button class="cancle-project-btn project-btn">Cancle</button>
+          </div>
+        </form>
+      </div>
+      <div class="right">
+        <button class="new-todo-btn">+ New Todo</button>
+        <h3>
+          Todos
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="arrow"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2.25a.75.75 0 0 1 .75.75v16.19l6.22-6.22a.75.75 0 1 1 1.06 1.06l-7.5 7.5a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 1 1 1.06-1.06l6.22 6.22V3a.75.75 0 0 1 .75-.75Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </h3>
+      </div>
+    </div>
+    <footer>© Copyright by Lazar Vuckovic</footer>
     <script src="script.js"></script>
   </body>
 </html>
