@@ -2,6 +2,11 @@
 
 const projectForm = document.querySelector(".new-project-form");
 const projectInput = document.querySelector(".project-input");
+const newProjectBtn = document.querySelector(".new-project-btn");
+const newTodoBtn = document.querySelector(".new-todo-btn");
+const todoForm = document.querySelector(".new-todo-form");
+const cancelProjectBtn = document.querySelector(".cancle-project-btn");
+const cancelTodoBtn = document.querySelector(".cancel-todo-btn");
 
 class Todo {
   constructor(title) {
@@ -45,4 +50,20 @@ projectForm.addEventListener("submit", (e) => {
     "Current Todos:",
     todoManager.getTodos().map((todo) => todo.getTitle())
   );
+});
+
+newProjectBtn.addEventListener("click", () => {
+  projectForm.classList.toggle("show");
+});
+
+newTodoBtn.addEventListener("click", () => {
+  todoForm.classList.toggle("show");
+});
+
+cancelProjectBtn.addEventListener("click", () => {
+  projectForm.classList.remove("show");
+});
+
+cancelTodoBtn.addEventListener("click", () => {
+  todoForm.classList.remove("show");
 });

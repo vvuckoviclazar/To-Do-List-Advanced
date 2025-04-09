@@ -45,7 +45,7 @@ h1 {
 }
 
 .arrow {
-  width: 15rem;
+  width: 25rem;
 }
 
 .container {
@@ -118,4 +118,116 @@ h3 {
   display: flex;
   align-items: center;
   gap: 120rem;
+}
+
+.new-project-form {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20rem);
+  overflow: hidden;
+  transition: all 0.4s ease, transform 0.4s ease;
+}
+
+.new-project-form.show {
+  max-height: 500rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.new-todo-form {
+  width: 100%;
+}
+
+.input-div {
+  display: grid;
+  grid-template-columns: 2.5fr 1.5fr;
+  gap: 100rem;
+  padding: 7rem 80rem 2rem 10rem;
+  background-color: rgb(212, 212, 212);
+  border-radius: 3rem;
+  border: 1rem rgb(163, 163, 163) solid;
+  margin-bottom: 5rem;
+}
+
+.todo-input {
+  width: 90%;
+  border: none;
+  font-size: 22rem;
+  padding: 6rem 20rem 6rem 20rem;
+  border-radius: 2rem;
+  margin-bottom: 5rem;
+  color: rgb(56, 68, 70);
+}
+
+.date-input {
+  text-align: center;
+  width: 90%;
+  border: none;
+  font-size: 22rem;
+  padding: 6rem 20rem 6rem 20rem;
+  border-radius: 2rem;
+  margin-bottom: 5rem;
+  color: rgb(56, 68, 70);
+}
+
+.grid-input-div {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+label {
+  font-size: 20rem;
+  font-weight: 100;
+  padding-bottom: 5rem;
+  color: rgb(56, 68, 70);
+}
+
+.todo-form-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rem;
+}
+
+.todo-btn {
+  border-radius: 5rem;
+  font-size: 22rem;
+  font-weight: 900;
+  width: 100%;
+  padding: 9rem 0rem 9rem 0rem;
+  color: rgb(55, 55, 55);
+}
+
+.add-todo-btn {
+  background-color: rgb(162, 254, 162);
+  border: 1rem solid rgb(0, 235, 0);
+}
+
+.add-todo-btn:hover {
+  background-color: rgb(120, 246, 120);
+  border: 1rem solid rgb(0, 235, 0);
+}
+
+.cancle-todo-btn {
+  background-color: rgb(246, 133, 133);
+  border: 1rem solid rgb(252, 63, 63);
+}
+
+.cancle-todo-btn:hover {
+  background-color: rgb(241, 96, 96);
+  border: 1rem solid rgb(252, 63, 63);
+}
+
+.new-todo-form {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20rem);
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.new-todo-form.show {
+  max-height: 500rem;
+  opacity: 1;
+  transform: translateY(0);
 }

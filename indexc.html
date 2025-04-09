@@ -28,13 +28,8 @@
             />
           </svg>
         </h3>
-        <form class="new-project-form">
-          <input
-            type="text"
-            class="project-input"
-            placeholder="My Project"
-            required=""
-          />
+        <form class="new-project-form hidden">
+          <input type="text" class="project-input" placeholder="My Project" />
           <div class="project-form-div">
             <button type="submit" class="add-project-btn project-btn">
               Add
@@ -60,6 +55,22 @@
             />
           </svg>
         </h3>
+        <form class="new-todo-form hidden">
+          <div class="input-div">
+            <div class="grid-input-div">
+              <label for="todo-input">Todo:</label>
+              <input type="text" class="todo-input" placeholder="My Project" />
+            </div>
+            <div class="grid-input-div">
+              <label for="date-input">Due:</label>
+              <input type="date" class="date-input" placeholder="My Todo" />
+            </div>
+          </div>
+          <div class="todo-form-div">
+            <button type="submit" class="add-todo-btn todo-btn">Add</button>
+            <button class="cancle-todo-btn todo-btn">Cancle</button>
+          </div>
+        </form>
       </div>
     </div>
     <footer>© Copyright by Lazar Vuckovic</footer>
