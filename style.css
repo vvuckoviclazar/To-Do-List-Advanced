@@ -126,6 +126,7 @@ h3 {
   transform: translateY(-20rem);
   overflow: hidden;
   transition: all 0.4s ease, transform 0.4s ease;
+  margin-bottom: 20rem;
 }
 
 .new-project-form.show {
@@ -230,4 +231,38 @@ label {
   max-height: 500rem;
   opacity: 1;
   transform: translateY(0);
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0rem;
+  width: 100%;
+}
+
+.project-li {
+  display: flex;
+  align-items: center;
+  font-size: 25rem;
+  font-weight: 300;
+  color: rgb(56, 68, 70);
+  margin-bottom: 5rem;
+  justify-content: space-between;
+  padding: 9rem 7rem 9rem 7rem;
+  border-radius: 5rem;
+}
+
+.project-li:hover {
+  background-color: rgb(199, 199, 199);
+}
+
+.project-btn-x {
+  font-size: 13rem;
+  text-align: center;
+  font-weight: 300;
+  width: 7%;
+  padding: 2rem 2rem 1rem 1rem;
+  border-radius: 50rem;
+  border: 2rem solid rgb(56, 68, 70);
+  margin: 0rem;
+  margin-top: 3rem;
 }
