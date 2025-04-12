@@ -266,3 +266,88 @@ ul {
   margin: 0rem;
   margin-top: 3rem;
 }
+
+.todo-list {
+  margin-bottom: 25rem;
+}
+
+.todo-li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 15rem;
+  padding-right: 15rem;
+}
+
+.todo-li:hover {
+  background-color: rgb(199, 199, 199);
+}
+
+.todo-btns-div {
+  display: flex;
+  align-items: center;
+  gap: 10rem;
+  width: 18%;
+}
+
+.edit-btn {
+  background-color: rgb(234, 234, 123);
+  border: 1rem solid rgb(210, 196, 0);
+  font-weight: 300;
+  font-size: 22rem;
+  color: rgb(61, 61, 61);
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+  width: 100%;
+  margin: 0rem;
+}
+
+.edit-btn:hover {
+  background-color: rgb(218, 218, 40);
+  border: 1rem solid rgb(210, 196, 0);
+}
+
+.delete-btn {
+  background-color: rgb(246, 133, 133);
+  border: 1rem solid rgb(252, 63, 63);
+  font-weight: 300;
+  font-size: 22rem;
+  color: rgb(49, 49, 49);
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+  width: 100%;
+  margin: 0rem;
+  padding-left: 8rem;
+  padding-right: 8rem;
+}
+
+.delete-btn:hover {
+  background-color: rgb(241, 96, 96);
+  border: 1rem solid rgb(252, 63, 63);
+}
+
+.todo-p {
+  font-size: 20rem;
+  font-weight: 100;
+}
+
+.textT {
+  font-weight: 200;
+  font-size: 25rem;
+}
+
+.check-p {
+  border: 3rem solid rgb(51, 51, 51);
+  font-size: 20rem;
+  padding: 0rem 5rem 0rem 5rem;
+  color: black;
+  border-radius: 3rem;
+  background-color: white;
+}
+
+.todo-flex {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}

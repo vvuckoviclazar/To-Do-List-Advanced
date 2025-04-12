@@ -16,6 +16,7 @@ class Project {
   constructor(title) {
     this.title = title;
     this.id = crypto.randomUUID();
+    this.todos = [];
   }
 
   getTitle() {
@@ -26,7 +27,8 @@ class Project {
     return this.id;
   }
 }
-
+const project1 = new Project("Lazar");
+console.log(project1);
 class ProjectManager {
   constructor() {
     this.projects = [];
