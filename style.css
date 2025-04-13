@@ -281,7 +281,7 @@ ul {
 }
 
 .todo-li:hover {
-  background-color: rgb(199, 199, 199);
+  background-color: rgb(214, 214, 214);
 }
 
 .todo-btns-div {
@@ -304,7 +304,7 @@ ul {
 }
 
 .edit-btn:hover {
-  background-color: rgb(218, 218, 40);
+  background-color: rgb(245, 245, 79);
   border: 1rem solid rgb(210, 196, 0);
 }
 

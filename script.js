@@ -26,9 +26,16 @@ class Project {
   getId() {
     return this.id;
   }
+
+  addTodo(todo) {
+    this.todos.push(todo);
+  }
+
+  getTodos() {
+    return this.todos;
+  }
 }
-const project1 = new Project("Lazar");
-console.log(project1);
+
 class ProjectManager {
   constructor() {
     this.projects = [];
@@ -72,26 +79,7 @@ class Todo {
   }
 }
 
-class TodoManager {
-  constructor() {
-    this.todos = [];
-  }
-
-  addTodo(todo) {
-    this.todos.push(todo);
-  }
-
-  getTodosByProjectId(projectId) {
-    return this.todos.filter((todo) => todo.getProjectId() === projectId);
-  }
-
-  getAllTodos() {
-    return this.todos;
-  }
-}
-
 const projectManager = new ProjectManager();
-const todoManager = new TodoManager();
 
 function createProjectElement(id, title) {
   const li = document.createElement("li");
@@ -121,16 +109,13 @@ projectForm.addEventListener("submit", (e) => {
   projectInput.value = "";
   projectForm.classList.remove("show");
 
-  console.log(
-    "Current Projects:",
-    projectManager.getProjects().map((project) => project.getTitle())
-  );
+  console.log("Created Project:", newProject);
 });
 
 addTodoBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const todoTitle = todoInput.value;
+  const todoTitle = todoInput.value.trim();
   const todoDate = dateInput.value;
 
   if (todoTitle === "" || todoDate === "") return;
@@ -142,7 +127,7 @@ addTodoBtn.addEventListener("click", (e) => {
   }
 
   const newTodo = new Todo(todoTitle, todoDate, currentProject.getId());
-  todoManager.addTodo(newTodo);
+  currentProject.addTodo(newTodo);
 
   todoInput.value = "";
   dateInput.value = "";
@@ -150,7 +135,7 @@ addTodoBtn.addEventListener("click", (e) => {
 
   console.log(
     `Todos for project "${currentProject.getTitle()}":`,
-    todoManager.getTodosByProjectId(currentProject.getId())
+    currentProject.getTodos()
   );
 });
 
@@ -169,3 +154,4 @@ cancleProjectBtn.addEventListener("click", () => {
 cancleTodoBtn.addEventListener("click", () => {
   todoForm.classList.remove("show");
 });
+console.log("All Projects (full):", projectManager.getProjects());
