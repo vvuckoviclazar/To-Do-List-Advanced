@@ -10,6 +10,7 @@ const addTodoBtn = document.querySelector(".add-todo-btn");
 const cancleProjectBtn = document.querySelector(".cancle-project-btn");
 const cancleTodoBtn = document.querySelector(".cancle-todo-btn");
 const projectList = document.querySelector(".project-list");
+const todoList = document.querySelector(".todo-list");
 const newTodoBtn = document.querySelector(".new-todo-btn");
 
 class Project {
@@ -81,6 +82,29 @@ class Todo {
 
 const projectManager = new ProjectManager();
 
+function createTodoElement(todo) {
+  const li = document.createElement("li");
+  li.classList.add("todo-li");
+
+  li.innerHTML = `
+    <div class="todo-flex">
+      <p class="todo-p">🗒️ Title:</p>
+      <p class="todo-text textT">${todo.getTitle()}</p>
+    </div>
+    <div class="todo-flex">
+      <p class="todo-p">📆 Due date:</p>
+      <p class="todo-date textT">${todo.getDate()}</p>
+    </div>
+    <div class="todo-btns-div">
+      <button class="edit-btn">edit</button>
+      <button class="delete-btn">delete</button>
+    </div>
+    <p class="check-p">✔️</p>
+  `;
+
+  return li;
+}
+
 function createProjectElement(id, title) {
   const li = document.createElement("li");
   li.id = id;
@@ -129,14 +153,14 @@ addTodoBtn.addEventListener("click", (e) => {
   const newTodo = new Todo(todoTitle, todoDate, currentProject.getId());
   currentProject.addTodo(newTodo);
 
+  const li = createTodoElement(newTodo);
+  todoList.appendChild(li);
+
   todoInput.value = "";
   dateInput.value = "";
   todoForm.classList.remove("show");
 
-  console.log(
-    `Todos for project "${currentProject.getTitle()}":`,
-    currentProject.getTodos()
-  );
+  console.dir(currentProject, { depth: null });
 });
 
 newProjectBtn.addEventListener("click", () => {
@@ -154,4 +178,5 @@ cancleProjectBtn.addEventListener("click", () => {
 cancleTodoBtn.addEventListener("click", () => {
   todoForm.classList.remove("show");
 });
+
 console.log("All Projects (full):", projectManager.getProjects());
