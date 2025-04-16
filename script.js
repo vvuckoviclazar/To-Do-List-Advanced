@@ -13,13 +13,20 @@ const projectList = document.querySelector(".project-list");
 const todoList = document.querySelector(".todo-list");
 const newTodoBtn = document.querySelector(".new-todo-btn");
 
-let activeProjectId = null;
-
 class Project {
   constructor(title) {
     this.title = title;
     this.id = crypto.randomUUID();
     this.todos = [];
+    this.isActive = false;
+  }
+
+  setActive(active) {
+    this.isActive = active;
+  }
+
+  getActive() {
+    return this.isActive;
   }
 
   getTitle() {
@@ -50,6 +57,16 @@ class ProjectManager {
 
   getProjects() {
     return this.projects;
+  }
+
+  getActiveProject() {
+    return this.projects.find((project) => project.getActive());
+  }
+
+  setActiveProject(projectId) {
+    this.projects.forEach((project) =>
+      project.setActive(project.getId() === projectId)
+    );
   }
 }
 
@@ -115,7 +132,7 @@ function createProjectElement(project) {
   li.appendChild(deleteBtn);
 
   li.addEventListener("click", () => {
-    activeProjectId = project.getId();
+    projectManager.setActiveProject(project.getId());
 
     document
       .querySelectorAll(".project-li")
@@ -156,26 +173,23 @@ projectForm.addEventListener("submit", (e) => {
   projectForm.classList.remove("show");
 
   console.log("Created Project:", newProject);
+  console.dir(projectManager.getProjects(), { depth: null });
 });
 
 addTodoBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const todoTitle = todoInput.value.trim();
+  const todoTitle = todoInput.value;
   const todoDate = dateInput.value;
 
-  if (!activeProjectId) {
+  const currentProject = projectManager.getActiveProject();
+
+  if (!currentProject) {
     alert("Please select a project first.");
     return;
   }
 
   if (todoTitle === "" || todoDate === "") return;
-
-  const currentProject = projectManager
-    .getProjects()
-    .find((p) => p.getId() === activeProjectId);
-
-  if (!currentProject) return;
 
   const newTodo = new Todo(todoTitle, todoDate, currentProject.getId());
   currentProject.addTodo(newTodo);
