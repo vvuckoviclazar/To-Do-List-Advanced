@@ -13,6 +13,8 @@ const projectList = document.querySelector(".project-list");
 const todoList = document.querySelector(".todo-list");
 const newTodoBtn = document.querySelector(".new-todo-btn");
 
+let activeProjectId = null;
+
 class Project {
   constructor(title) {
     this.title = title;
@@ -48,10 +50,6 @@ class ProjectManager {
 
   getProjects() {
     return this.projects;
-  }
-
-  getLastProject() {
-    return this.projects[this.projects.length - 1];
   }
 }
 
@@ -99,23 +97,47 @@ function createTodoElement(todo) {
       <button class="edit-btn">edit</button>
       <button class="delete-btn">delete</button>
     </div>
-    <p class="check-p">✔️</p>
+    <p class="check-p">X</p>
   `;
 
   return li;
 }
 
-function createProjectElement(id, title) {
+function createProjectElement(project) {
   const li = document.createElement("li");
-  li.id = id;
+  li.id = project.getId();
   li.classList.add("project-li");
+  li.textContent = project.getTitle();
 
-  li.innerHTML = `
-    ${title}
-    <button class="project-btn-x">✖️</button>
-  `;
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("project-btn-x");
+  deleteBtn.textContent = "✖️";
+  li.appendChild(deleteBtn);
+
+  li.addEventListener("click", () => {
+    activeProjectId = project.getId();
+
+    document
+      .querySelectorAll(".project-li")
+      .forEach((el) => el.classList.remove("active"));
+    li.classList.add("active");
+
+    console.log(`Project selected: "${project.getTitle()}"`);
+    console.dir(project, { depth: null });
+
+    renderTodosForProject(project);
+  });
 
   return li;
+}
+
+function renderTodosForProject(project) {
+  todoList.innerHTML = "";
+
+  project.getTodos().forEach((todo) => {
+    const li = createTodoElement(todo);
+    todoList.appendChild(li);
+  });
 }
 
 projectForm.addEventListener("submit", (e) => {
@@ -127,7 +149,7 @@ projectForm.addEventListener("submit", (e) => {
   const newProject = new Project(inputValue);
   projectManager.addProject(newProject);
 
-  const li = createProjectElement(newProject.id, newProject.getTitle());
+  const li = createProjectElement(newProject);
   projectList.appendChild(li);
 
   projectInput.value = "";
@@ -142,24 +164,29 @@ addTodoBtn.addEventListener("click", (e) => {
   const todoTitle = todoInput.value.trim();
   const todoDate = dateInput.value;
 
-  if (todoTitle === "" || todoDate === "") return;
-
-  const currentProject = projectManager.getLastProject();
-  if (!currentProject) {
-    alert("Please create a project first.");
+  if (!activeProjectId) {
+    alert("Please select a project first.");
     return;
   }
 
+  if (todoTitle === "" || todoDate === "") return;
+
+  const currentProject = projectManager
+    .getProjects()
+    .find((p) => p.getId() === activeProjectId);
+
+  if (!currentProject) return;
+
   const newTodo = new Todo(todoTitle, todoDate, currentProject.getId());
   currentProject.addTodo(newTodo);
-
-  const li = createTodoElement(newTodo);
-  todoList.appendChild(li);
 
   todoInput.value = "";
   dateInput.value = "";
   todoForm.classList.remove("show");
 
+  renderTodosForProject(currentProject);
+
+  console.log(`Todo added to "${currentProject.getTitle()}":`, newTodo);
   console.dir(currentProject, { depth: null });
 });
 
@@ -178,5 +205,3 @@ cancleProjectBtn.addEventListener("click", () => {
 cancleTodoBtn.addEventListener("click", () => {
   todoForm.classList.remove("show");
 });
-
-console.log("All Projects (full):", projectManager.getProjects());
