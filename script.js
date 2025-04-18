@@ -18,15 +18,6 @@ class Project {
     this.title = title;
     this.id = crypto.randomUUID();
     this.todos = [];
-    this.isActive = false;
-  }
-
-  setActive(active) {
-    this.isActive = active;
-  }
-
-  getActive() {
-    return this.isActive;
   }
 
   getTitle() {
@@ -49,6 +40,7 @@ class Project {
 class ProjectManager {
   constructor() {
     this.projects = [];
+    this.activeProject = null;
   }
 
   addProject(project) {
@@ -60,12 +52,12 @@ class ProjectManager {
   }
 
   getActiveProject() {
-    return this.projects.find((project) => project.getActive());
+    return this.activeProject;
   }
 
   setActiveProject(projectId) {
-    this.projects.forEach((project) =>
-      project.setActive(project.getId() === projectId)
+    this.activeProject = this.projects.find(
+      (project) => project.getId() === projectId
     );
   }
 }
@@ -74,7 +66,6 @@ class Todo {
   constructor(title, date, projectId) {
     this.title = title;
     this.date = date;
-    this.projectId = projectId;
     this.id = crypto.randomUUID();
   }
 
@@ -84,10 +75,6 @@ class Todo {
 
   getDate() {
     return this.date;
-  }
-
-  getProjectId() {
-    return this.projectId;
   }
 
   getId() {
@@ -160,7 +147,7 @@ function renderTodosForProject(project) {
 projectForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const inputValue = projectInput.value.trim();
+  const inputValue = projectInput.value;
   if (inputValue === "") return;
 
   const newProject = new Project(inputValue);
