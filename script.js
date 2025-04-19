@@ -60,6 +60,10 @@ class ProjectManager {
       (project) => project.getId() === projectId
     );
   }
+
+  removeProject(id) {
+    this.projects = this.projects.filter((project) => project.getId() !== id);
+  }
 }
 
 class Todo {
@@ -67,6 +71,7 @@ class Todo {
     this.title = title;
     this.date = date;
     this.id = crypto.randomUUID();
+    this.isChecked = false;
   }
 
   getTitle() {
@@ -79,6 +84,14 @@ class Todo {
 
   getId() {
     return this.id;
+  }
+
+  switchChecked() {
+    this.isChecked = !this.isChecked;
+  }
+
+  getChecked() {
+    return this.isChecked;
   }
 }
 
@@ -101,7 +114,9 @@ function createTodoElement(todo) {
       <button class="edit-btn">edit</button>
       <button class="delete-btn">delete</button>
     </div>
-    <p class="check-p">X</p>
+    <p class="check-p" data-id="${todo.getId()}">${
+    todo.getChecked() ? "✔️" : "X"
+  }</p>
   `;
 
   return li;
@@ -117,20 +132,6 @@ function createProjectElement(project) {
   deleteBtn.classList.add("project-btn-x");
   deleteBtn.textContent = "✖️";
   li.appendChild(deleteBtn);
-
-  li.addEventListener("click", () => {
-    projectManager.setActiveProject(project.getId());
-
-    document
-      .querySelectorAll(".project-li")
-      .forEach((el) => el.classList.remove("active"));
-    li.classList.add("active");
-
-    console.log(`Project selected: "${project.getTitle()}"`);
-    console.dir(project, { depth: null });
-
-    renderTodosForProject(project);
-  });
 
   return li;
 }
@@ -189,6 +190,50 @@ addTodoBtn.addEventListener("click", (e) => {
 
   console.log(`Todo added to "${currentProject.getTitle()}":`, newTodo);
   console.dir(currentProject, { depth: null });
+});
+
+projectList.addEventListener("click", (e) => {
+  const li = e.target.closest(".project-li");
+  if (!li) return;
+
+  const id = li.id;
+  const project = projectManager.getProjects().find((p) => p.getId() === id);
+  if (!project) return;
+
+  if (e.target.closest(".project-btn-x")) {
+    projectManager.removeProject(id);
+    li.remove();
+  }
+
+  projectManager.setActiveProject(id);
+
+  document
+    .querySelectorAll(".project-li")
+    .forEach((el) => el.classList.remove("active"));
+  li.classList.add("active");
+
+  console.log(`Project selected: "${project.getTitle()}"`);
+  console.dir(project, { depth: null });
+
+  renderTodosForProject(project);
+});
+
+todoList.addEventListener("click", (e) => {
+  const card = e.target.closest("li");
+  if (!card) return;
+
+  const id = card.querySelector(".check-p")?.dataset.id;
+
+  const currentProject = projectManager.getActiveProject();
+  if (!currentProject) return;
+
+  const todo = currentProject.getTodos().find((t) => t.getId() === id);
+  const checkBtn = card.querySelector(".check-p");
+
+  if (e.target.closest(".check-p")) {
+    todo.switchChecked();
+    checkBtn.textContent = todo.getChecked() ? "✔️" : "X";
+  }
 });
 
 newProjectBtn.addEventListener("click", () => {
