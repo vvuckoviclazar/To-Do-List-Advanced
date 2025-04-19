@@ -63,6 +63,7 @@ class ProjectManager {
 
   removeProject(id) {
     this.projects = this.projects.filter((project) => project.getId() !== id);
+    console.log(this.projects);
   }
 }
 
@@ -203,6 +204,9 @@ projectList.addEventListener("click", (e) => {
   if (e.target.closest(".project-btn-x")) {
     projectManager.removeProject(id);
     li.remove();
+    todoList.innerHTML = "";
+    projectManager.activeProject = null;
+    return;
   }
 
   projectManager.setActiveProject(id);
