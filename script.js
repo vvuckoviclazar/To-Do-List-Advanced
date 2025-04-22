@@ -73,6 +73,7 @@ class Todo {
     this.date = date;
     this.id = crypto.randomUUID();
     this.isChecked = false;
+    this.isEditing = false;
   }
 
   getTitle() {
@@ -94,6 +95,23 @@ class Todo {
   getChecked() {
     return this.isChecked;
   }
+
+  startEditing() {
+    this.isEditing = true;
+  }
+
+  stopEditing() {
+    this.isEditing = false;
+  }
+
+  isBeingEdited() {
+    return this.isEditing;
+  }
+
+  update(title, date) {
+    this.title = title;
+    this.date = date;
+  }
 }
 
 const projectManager = new ProjectManager();
@@ -102,24 +120,41 @@ function createTodoElement(todo) {
   const li = document.createElement("li");
   li.classList.add("todo-li");
 
-  li.innerHTML = `
-    <div class="todo-flex">
-      <p class="todo-p">🗒️ Title:</p>
-      <p class="todo-text textT">${todo.getTitle()}</p>
-    </div>
-    <div class="todo-flex">
-      <p class="todo-p">📆 Due date:</p>
-      <p class="todo-date textT">${todo.getDate()}</p>
-    </div>
-    <div class="todo-btns-div">
-      <button class="edit-btn">edit</button>
-      <button class="delete-btn">delete</button>
-    </div>
-    <p class="check-p" data-id="${todo.getId()}">${
-    todo.getChecked() ? "✔️" : "X"
-  }</p>
-  `;
+  if (todo.isBeingEdited()) {
+    li.innerHTML = `
+      <div class="todo-flex">
+        <p class="todo-p">🗒️ Title:</p>
+        <input type="text" class="edit-title-input" value="${todo.getTitle()}">
+      </div>
+      <div class="todo-flex">
+        <p class="todo-p">📆 Due date:</p>
+        <input type="date" class="edit-date-input" value="${todo.getDate()}">
+      </div>
+      <div class="todo-btns-div">
+        <button class="finish-edit-btn">Finish</button>
+      </div>
+    `;
+  } else {
+    li.innerHTML = `
+      <div class="todo-flex">
+        <p class="todo-p">🗒️ Title:</p>
+        <p class="todo-text textT">${todo.getTitle()}</p>
+      </div>
+      <div class="todo-flex">
+        <p class="todo-p">📆 Due date:</p>
+        <p class="todo-date textT">${todo.getDate()}</p>
+      </div>
+      <div class="todo-btns-div">
+        <button class="edit-btn">edit</button>
+        <button class="delete-btn">delete</button>
+      </div>
+      <p class="check-p" data-id="${todo.getId()}">${
+      todo.getChecked() ? "✔️" : "X"
+    }</p>
+    `;
+  }
 
+  li.dataset.id = todo.getId();
   return li;
 }
 
@@ -172,7 +207,6 @@ addTodoBtn.addEventListener("click", (e) => {
   const todoDate = dateInput.value;
 
   const currentProject = projectManager.getActiveProject();
-
   if (!currentProject) {
     alert("Please select a project first.");
     return;
@@ -226,17 +260,36 @@ todoList.addEventListener("click", (e) => {
   const card = e.target.closest("li");
   if (!card) return;
 
-  const id = card.querySelector(".check-p")?.dataset.id;
+  const id = card.dataset.id;
 
   const currentProject = projectManager.getActiveProject();
   if (!currentProject) return;
 
   const todo = currentProject.getTodos().find((t) => t.getId() === id);
+  if (!todo) return;
+
   const checkBtn = card.querySelector(".check-p");
 
   if (e.target.closest(".check-p")) {
     todo.switchChecked();
     checkBtn.textContent = todo.getChecked() ? "✔️" : "X";
+  }
+
+  if (e.target.closest(".edit-btn")) {
+    currentProject.getTodos().forEach((t) => t.stopEditing());
+    renderTodosForProject(currentProject);
+  }
+
+  if (e.target.closest(".finish-edit-btn")) {
+    const newTitle = card.querySelector(".edit-title-input").value;
+    const newDate = card.querySelector(".edit-date-input").value;
+
+    if (newTitle.trim() !== "" && newDate.trim() !== "") {
+      todo.update(newTitle, newDate);
+    }
+
+    todo.stopEditing();
+    renderTodosForProject(currentProject);
   }
 });
 
