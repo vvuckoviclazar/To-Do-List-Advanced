@@ -35,6 +35,10 @@ class Project {
   getTodos() {
     return this.todos;
   }
+
+  removeTodo(todoId) {
+    this.todos = this.todos.filter((todo) => todo.getId() !== todoId);
+  }
 }
 
 class ProjectManager {
@@ -131,7 +135,7 @@ function createTodoElement(todo) {
         <input type="date" class="edit-date-input" value="${todo.getDate()}">
       </div>
       <div class="todo-btns-div">
-        <button class="finish-edit-btn">Finish</button>
+        <button class="finish-edit-btn">Finish editing</button>
       </div>
     `;
   } else {
@@ -224,7 +228,6 @@ addTodoBtn.addEventListener("click", (e) => {
   renderTodosForProject(currentProject);
 
   console.log(`Todo added to "${currentProject.getTitle()}":`, newTodo);
-  console.dir(currentProject, { depth: null });
 });
 
 projectList.addEventListener("click", (e) => {
@@ -251,7 +254,6 @@ projectList.addEventListener("click", (e) => {
   li.classList.add("active");
 
   console.log(`Project selected: "${project.getTitle()}"`);
-  console.dir(project, { depth: null });
 
   renderTodosForProject(project);
 });
@@ -277,6 +279,7 @@ todoList.addEventListener("click", (e) => {
 
   if (e.target.closest(".edit-btn")) {
     currentProject.getTodos().forEach((t) => t.stopEditing());
+    todo.startEditing();
     renderTodosForProject(currentProject);
   }
 
@@ -290,6 +293,11 @@ todoList.addEventListener("click", (e) => {
 
     todo.stopEditing();
     renderTodosForProject(currentProject);
+  }
+
+  if (e.target.closest(".delete-btn")) {
+    currentProject.removeTodo(id);
+    card.remove();
   }
 });
 
